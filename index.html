@@ -7,14 +7,35 @@
     <script src='/socket.io/socket.io.js'></script>
     <script>
       var socket = io.connect('/');
-      var action = function(data){
-/*        if(data == 'kick'){*/
-/*          console.log('test');*/
-/*          $.playSound('http://www.denhaku.com/r_box/linn/sd2.wav');*/
-/*        }*/
+      var action = function(o){
+
+        if(o == 'kick'){
+          data = 'kick';
+        }
+        else if(o >= 0 && o < 30){
+          data = 'hi_hat';
+        }
+        else if(o >= 30 && o < 60){
+          data = 'snare';
+        }
+        else if(o >= 60 && o < 90){
+          data = 'tom';
+        }
+        else if(o >= 90 && o < 120){
+          data = 'crash';
+        }
+        else if(o >= 120 && o <= 150){
+          data = 'ride';
+        }
+        else{
+          data = 'gong';
+        }
+
         console.log(data);
         $.playSound('/assets/sounds/' + data + '.wav');
       };
+
+
       socket.on('action', function(data){
         console.log(data);
         action(data);
